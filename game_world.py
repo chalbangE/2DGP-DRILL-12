@@ -1,6 +1,8 @@
 objects = [[] for _ in range(4)]
 collision_pairs = {}
 
+# 충돌체크를 해야하는 관계임을 넣어주는 함수
+# init에서 지정
 def add_collision_pair(group, a, b):
     if group not in collision_pairs:
         print(f'Added new group {group}')
@@ -10,6 +12,7 @@ def add_collision_pair(group, a, b):
     if b:
         collision_pairs[group][1].append(b)
 
+# 충돌체크를 이제 하지 않아도 된다고 표시해주는 함수
 def remove_collision_object(o):
     for pairs in collision_pairs.values():
         if o in pairs[0]:
@@ -17,6 +20,7 @@ def remove_collision_object(o):
         if o in pairs[1]:
             pairs[1].remove(o)
 
+# 충돌했을 때 충돌한 a와 b에 누구와 충돌했는지 알려주고 그에 맞는 행동을 하도록 하는 함수
 def handle_collisions():
     for group, pairs in collision_pairs.items():
         for a in pairs[0]:
@@ -43,6 +47,7 @@ def render():
         for o in layer:
             o.draw()
 
+# 충돌 여부 판별해주는 함수
 def collide(a, b):
     left_a, battom_a, right_a, top_a = a.get_bb()
     left_b, battom_b, right_b, top_b = b.get_bb()

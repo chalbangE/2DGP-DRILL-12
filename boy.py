@@ -5,9 +5,8 @@ from pico2d import get_time, load_image, load_font, clamp, SDL_KEYDOWN, SDL_KEYU
 from ball import Ball
 import game_world
 import game_framework
-
-# state event check
-# ( state event type, event value )
+from zombie import Zombie
+import play_mode
 
 def right_down(e):
     return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_RIGHT
@@ -199,6 +198,8 @@ class Boy:
             self.ball_count -= 1
             ball = Ball(self.x, self.y, self.face_dir*10)
             game_world.add_object(ball)
+            for zombie in play_mode.zombies:
+                game_world.add_collision_pair('ball:zombie', ball, zombie)
 
     def update(self):
         self.state_machine.update()
